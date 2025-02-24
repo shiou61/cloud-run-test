@@ -5,10 +5,10 @@ on:
   push:
 
 env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
-  IMAGE: ${{ secrets.GCP_IMAGE }}
-  REGION: ${{ secrets.GCP_REGION }}
+  PROJECT_ID: amiable-might-426222-r2
+  SERVICE_NAME: cloud-run-test
+  IMAGE: cloud-run-test
+  REGION: us-central1
   TAG: latest
 
 jobs:

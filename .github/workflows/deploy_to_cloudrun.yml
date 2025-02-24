@@ -5,10 +5,9 @@ on:
   push:
 
 env:
-  PROJECT_ID: amiable-might-426222-r2
-  SERVICE_NAME: cloud-run-test
-  IMAGE: cloud-run-test
-  REGION: us-central1
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  IMAGE: ${{ secrets.GCP_IMAGE }}
+  REGION: ${{ secrets.GCP_REGION }}
   TAG: latest
 
 jobs:
@@ -36,8 +35,8 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build --platform linux/amd64 -t us-central1-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/$IMAGE:$TAG .
-          docker push us-central1-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/$IMAGE:$TAG
+          docker build --platform linux/amd64 -t us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE:$TAG .
+          docker push us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE:$TAG
 
       - name: Deploy
-        run: gcloud run deploy $SERVICE_NAME --image us-central1-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/$IMAGE:$TAG --platform managed --region $REGION --allow-unauthenticated
+        run: gcloud run deploy $SERVICE_NAME --image us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE:$TAG --platform managed --region $REGION --allow-unauthenticated

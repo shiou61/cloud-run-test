@@ -6,6 +6,7 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
   IMAGE: ${{ secrets.GCP_IMAGE }}
   REGION: ${{ secrets.GCP_REGION }}
   TAG: latest
@@ -35,8 +36,8 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build --platform linux/amd64 -t us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE:$TAG .
-          docker push us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE:$TAG
+          docker build --platform linux/amd64 -t us-central1-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/$IMAGE:$TAG .
+          docker push us-central1-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/$IMAGE:$TAG
 
       - name: Deploy
-        run: gcloud run deploy $SERVICE_NAME --image us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE:$TAG --platform managed --region $REGION --allow-unauthenticated
+        run: gcloud run deploy $SERVICE_NAME --image us-central1-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/$IMAGE:$TAG --platform managed --region $REGION --allow-unauthenticated

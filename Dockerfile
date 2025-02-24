@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN poetry install --no-root
+RUN pip install poetry
+RUN poetry config virtualenvs.create false \
+    && poetry install --no-root
 
 ENTRYPOINT [ "python3", "cloud-run-test.py" ]
